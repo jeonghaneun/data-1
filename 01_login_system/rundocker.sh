@@ -4,3 +4,4 @@ docker run -it \
               --rm \
               -v $(pwd)/test:/app \
               test:0.3
+
