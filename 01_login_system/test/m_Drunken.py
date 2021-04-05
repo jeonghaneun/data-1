@@ -1,48 +1,56 @@
 import os
 import time
+import m_Item
 
 print("m.druken")
 
 class User:
   def __init__(self):
-    self.money = 0 
+    self.money = 30 
     self.size = 0
+    self.item_dict = m_Item.item_dict
   def __del__(self):
     print("Next")
-  def bye_Item(self):
-    running
+  # Ending according to liver size
+  def ending(self):
+    if self.size > 0:
+      print(f"SUCCESS! My liver size is {self.size}")
+      time.sleep(3)
+    elif self.size <= 0:
+      print(f"GAME-OVER! My liver size is {self.size}")
+      time.sleep(3)
+  # Check money
+  def check_money(self, choice_money):
+    if self.money < choice_money:
+      return False
+    else:
+      return True
+  # Buying items to increase liver size (only fruit decreases the liver size)
+  def buy_item(self):
+    running = True
     while running:
       os.system("clear")
       print(f"========Money:{self.money}=========")
       print("==============Itemstore=============")
-      print("1. fruit                     $2     ")
-      print("2. drinks                    $3     ")
-      print("3. medicine                  $4     ")
-      print("4. honey                     $5     ")
+      for i in self.item_dict:
+        print(f"{i['id']}. {i['item']}           $ {i['price']}   ")
+      print("q. exit                             ")
       choice = input("Choose Item: ")
-      if choice == '1':
-        self.money = self.money-2
-        self.size = self.size-20
-      elif choice == '2':
-        self.money = self.money-3
-        self.size = self.size+30
-      elif choice == '3':
-        self.money = self.money-5
-        self.size = self.size+50
-      elif choice == '4':
-        self.money = self.money-7
-        self.size = self.size+100
-      elif choice == 'q':
+      for i in self.item_dict: 
+        if choice == str(i['id']):
+          running = self.check_money(i['price'])
+          self.money = self.money-i['price']
+          self.size = self.size+i['health']
+          break
+      if choice == 'q':
         running = False
       else:
         pass
 
 class Game:
-  def __init__(self):
-    self.Liver_size = 0
   def __del__(self):
     print("Next") 
-  def GAMESTART(self):
+  def game_start(self, user):
     running = True
     while running:
       os.system("clear")
@@ -55,28 +63,29 @@ class Game:
       print("5. Finished                      ===")
       choice = input("Drinking: ")
       if choice == '1':
-        self.Liver_size = self.Liver_size-10
+        user.size = user.size-10
       elif choice == '2':
-        self.Liver_size = self.Liver_size-5
+        user.size = user.size-5
       elif choice == '3':
-        self.Liver_size = self.Liver_size-20
+        user.size = user.size-20
       elif choice == '4':
-        self.Liver_size = self.Liver_size-35
+        user.size = user.size-35
       elif choice == '5':
         running = False
       else:
         pass
 
-class LIVERSIZE:
-  def Ending(self,liversize):
-    for user in liversize: 
-      self.Liver_size >= self.size:
-      print("SUCCESS")
-    time.sleep(3)
-    for user in liversize: 
-      self.Liver_size < self.size:
-      print("OVERIT!!!!!!!!!!!!!!!!!!")
-    time.sleep(3)
+if __name__ == "__main__":
+  time.sleep(3)
+  # 0. Create user and game
+  user = User()
+  game = Game()
+  # 1. user buys item
+  user.buy_item()
+  # 2. game tries to kill user
+  game.game_start(user)
+  # 3. ending
+  user.ending()
 
   
 
